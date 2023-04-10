@@ -1,27 +1,16 @@
-import Basket from "@/components/Basket";
-import FilterComp from "@/components/FilterComp";
-import Products from "@/components/Products";
-import Layout from "@/layout/layout";
-import { Container, Grid, GridItem, Icon, Text } from "@chakra-ui/react";
-import { ServerResponse } from "http";
 import { GetServerSideProps } from "next";
+import Basket from "@/components/Basket";
+import DetailCard from "@/components/DetailCard.tsx";
+import Layout from "@/layout/layout";
+import { Container, Grid, GridItem } from "@chakra-ui/react";
+import { ProductsData } from "@/pages";
 
-export interface ProductsData {
-  count: number;
-  brand: string;
-  createdAt: string;
-  description: string;
-  id: string;
-  image: string;
-  model: string;
-  name: string;
-  price: string;
-}
 const API = "https://5fc9346b2af77700165ae514.mockapi.io/products" as string;
 
-export default function Home({ data }: { data: ProductsData[] }) {
-  const title = "Home";
-  const description = "Home page";
+export default function detail({ data }: { data: ProductsData }) {
+  const title = "Detail";
+  const description = "Detail page";
+
   return (
     <Layout title={title} description={description}>
       <Container
@@ -44,23 +33,17 @@ export default function Home({ data }: { data: ProductsData[] }) {
           <GridItem
             colSpan={{
               base: 24,
-              lg: 5,
+              md: 16,
+              lg: 18,
             }}
           >
-            <FilterComp />
+            <DetailCard data={data} />
           </GridItem>
           <GridItem
             colSpan={{
               base: 24,
-              lg: 14,
-            }}
-          >
-            <Products data={data} />
-          </GridItem>
-          <GridItem
-            colSpan={{
-              base: 24,
-              lg: 5,
+              md: 8,
+              lg: 6,
             }}
           >
             <Basket />
@@ -71,13 +54,17 @@ export default function Home({ data }: { data: ProductsData[] }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  res,
+  query,
+}) => {
   res.setHeader(
     "Cache-Control",
     "public, s-maxage=10, stale-while-revalidate=59"
   );
   try {
-    const response = await fetch(API);
+    const { id } = query;
+    const response = await fetch(`${API}/${id}`);
     const products = await response.json();
     return {
       props: {
