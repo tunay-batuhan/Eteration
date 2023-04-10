@@ -6,6 +6,8 @@ Case'i yaparken kullandığım teknolojileri ve sebeplerini basit bir özet geç
 TypeScript ve Next.js kullanmayı tercih ettim. 
 SEO uyumluluğu için SSR ile istekleri attım, aynı zamanda verilerin değişmeyeceği için istekleri önbelleğe aldım. Görsel tasarım için Chakra UI kullandım. State yönetimi için Jotai kütüphanesini tercih ettim. Son zamanlarda atomic stateleri incelemekteyim, Case için uygun olmasa da benim için pratik bir deneyim oldu.
 
+Search alanlarına custom debounce ekledim ve filtreleme alanlarını kendi içinde de filtreleme yapacak şekilde kurguladım.
+
 ![image](https://user-images.githubusercontent.com/50638690/230809190-7cb1e143-fced-40e7-a734-eb69d7213ae4.png)
 
 Lighthouse skorunu elimden geldiğince yüksek tutmaya çalıştım.
